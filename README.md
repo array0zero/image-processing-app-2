@@ -1,54 +1,56 @@
-# image-processing-app-2
+# 画像処理アプリ（image-processing-app-2）
 
-A simple Streamlit/OpenCV app for trying basic image processing operations.
+## 概要
 
-## Overview
+`image-processing-app-2` は、画像をアップロードして、基本的な画像処理をブラウザ上で試せる Streamlit アプリです。
 
-`image-processing-app-2` is a personal portfolio project for practicing how to build a small image processing application with clear input, processing, and output steps.
+画像を入力し、処理を選択し、パラメータを調整して、処理結果を表示・保存できます。
+入力、処理、出力の流れを整理し、後から機能追加しやすい構成にすることを意識して作成しています。
 
-This app lets users upload an image, choose a basic image processing operation, adjust parameters, compare the original and processed images, and download the result.
+## 作成目的
 
-## Purpose
+このプロジェクトは、GitHubに公開できる就活向けの個人プロジェクトとして作成しました。
 
-This repository is intended for a job-hunting portfolio. Instead of publishing research code directly, this project demonstrates related image processing skills in a public and easy-to-explain application.
+研究で扱っている画像処理・画像解析の考え方に近いテーマを選びつつ、研究本体とは切り分けて、公開しやすいシンプルな画像処理アプリとして実装しています。
 
-The project focuses on:
+特に以下を見せることを目的にしています。
 
-- Organizing input, processing, and output steps
-- Separating application code and image processing functions
-- Building a usable Streamlit app
-- Keeping the structure easy to extend later
-- Writing a README that explains the purpose, setup, and usage clearly
+* Pythonで画像処理アプリを実装できること
+* OpenCVを使った基本的な画像処理を理解していること
+* Streamlitで簡単なUIを作成できること
+* 入力、処理、出力を整理して設計できること
+* 後から機能追加しやすいようにファイルを分けて実装できること
 
-## Features
+## 主な機能
 
-Current MVP features:
+現在のMVPでは、以下の機能を実装しています。
 
-- Upload PNG/JPG images
-- Select an image processing operation
-- Adjust parameters from the sidebar
-- Display original and processed images side by side
-- Download the processed image as a PNG file
+* 画像のアップロード
+* 画像処理の選択
+* パラメータの調整
+* 元画像と処理後画像の比較表示
+* 処理後画像のダウンロード
+* 輪郭検出結果の簡単な集計表示
 
-Supported image processing operations:
+## 実装済みの画像処理
 
-- Resize
-- Grayscale
-- Gaussian Blur
-- Thresholding
-- Canny Edge Detection
-- Contour Detection
+* リサイズ（Resize）
+* グレースケール変換（Grayscale）
+* ガウシアンぼかし（Gaussian Blur）
+* しきい値処理（Thresholding）
+* エッジ検出（Canny Edge Detection）
+* 輪郭検出（Contour Detection）
 
-## Tech Stack
+## 使用技術
 
-- Python
-- OpenCV
-- NumPy
-- Pillow
-- Streamlit
-- Git / GitHub
+* Python
+* OpenCV
+* NumPy
+* Pillow
+* Streamlit
+* Git / GitHub
 
-## Directory Structure
+## ディレクトリ構成
 
 ```text
 image-processing-app-2/
@@ -65,86 +67,134 @@ image-processing-app-2/
 └── assets/
 ```
 
-## Setup
+## 各ファイルの役割
 
-### 1. Clone the repository
+### app.py
+
+Streamlitアプリ本体です。
+
+主に以下を担当します。
+
+* 画像アップロード
+* 処理メニューの表示
+* パラメータ入力
+* 画像処理関数の呼び出し
+* 元画像と処理後画像の表示
+* 処理後画像のダウンロード
+
+### src/processing.py
+
+画像処理の関数をまとめています。
+
+主な関数は以下です。
+
+* `resize_image()`
+* `convert_to_grayscale()`
+* `apply_gaussian_blur()`
+* `apply_threshold()`
+* `detect_edges()`
+* `detect_contours()`
+
+### src/utils.py
+
+画像の読み込み、表示形式への変換、PNGエンコードなど、補助的な処理をまとめています。
+
+## セットアップ方法
+
+### 1. リポジトリをクローン
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/image-processing-app-2.git
+git clone https://github.com/ユーザー名/image-processing-app-2.git
 cd image-processing-app-2
 ```
 
-### 2. Create and activate a virtual environment
+### 2. 仮想環境を作成
 
-Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-macOS / Linux:
+macOS / Linux の場合:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+Windows の場合:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### 3. 必要なライブラリをインストール
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## How to Run
+## 実行方法
+
+以下のコマンドでアプリを起動します。
 
 ```bash
 streamlit run app.py
 ```
 
-Then open the local URL shown in the terminal.
-
-## Basic Usage
-
-1. Upload a PNG or JPG image.
-2. Select an image processing operation from the sidebar.
-3. Adjust the parameters.
-4. Compare the original and processed images.
-5. Download the processed image if needed.
-
-## Processing Flow
+ブラウザで以下のようなURLが開きます。
 
 ```text
-Uploaded image
-    ↓
-Convert to OpenCV image
-    ↓
-Select processing method
-    ↓
-Apply image processing function
-    ↓
-Display result in Streamlit
-    ↓
-Download processed image
+http://localhost:8501
 ```
 
-## Implementation Notes
+## 使い方
 
-- `app.py` handles the Streamlit user interface.
-- `src/processing.py` contains image processing functions.
-- `src/utils.py` contains helper functions for image loading, display conversion, encoding, and filenames.
-- OpenCV uses BGR color order, so images are converted to RGB before display in Streamlit.
-- Processing functions are separated from the UI to make the project easier to test and extend.
+1. アプリを起動する
+2. 画像をアップロードする
+3. サイドバーから画像処理を選択する
+4. 必要に応じてパラメータを調整する
+5. 元画像と処理後画像を比較する
+6. 処理後画像をダウンロードする
 
-## Future Improvements
+## スクリーンショット
 
-Planned improvements:
+今後、アプリ画面のスクリーンショットを追加予定です。
 
-- Add sample input/output images
-- Add screenshots to this README
-- Add histogram visualization
-- Add contour area and perimeter analysis
-- Add batch processing for multiple images
-- Add ZIP download for multiple processed images
-- Add unit tests for processing functions
-- Add optional machine learning features with PyTorch
+```md
+![アプリ画面](assets/screenshot.png)
+```
+
+## 工夫した点
+
+* Streamlitを使い、ブラウザ上で簡単に画像処理を試せるようにしました。
+* OpenCVのBGR形式と表示用のRGB形式を区別して扱うようにしました。
+* `app.py` にUI、`src/processing.py` に画像処理、`src/utils.py` に補助処理を分けました。
+* 画像処理ごとにパラメータを調整できるようにしました。
+* 元画像と処理後画像を横並びで比較できるようにしました。
+* 処理後の画像をPNGとしてダウンロードできるようにしました。
+
+## 今後の改善点
+
+今後は以下の機能を追加する予定です。
+
+* 複数画像の一括処理
+* 処理履歴の表示
+* ヒストグラム表示
+* 輪郭の面積や周囲長の詳細表示
+* サンプル画像の追加
+* UIデザインの改善
+* PyTorchモデルを使った画像分類やセグメンテーションへの拡張
+
+## 学習・開発メモ
+
+このアプリでは、画像処理の基本的な流れである
+
+```text
+入力 → 処理 → 表示 → 保存
+```
+
+を整理して実装しています。
+
+小さいアプリですが、機能をファイル単位で分けることで、後から処理を追加しやすい構成にしています。
+
+## ライセンス
+
+このリポジトリのライセンスは未設定です。
+必要に応じて、今後MIT Licenseなどを追加予定です。
